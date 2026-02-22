@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Loyola Design Program — Student Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET & BASE ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --maroon:       #6B1414;
+  --maroon-dark:  #4A0E0E;
+  --maroon-deep:  #340A0A;
+  --maroon-mid:   #8B1A1A;
+  --maroon-light: #F5ECEC;
+  --maroon-pale:  #FAF4F4;
+  --gold:         #C9A227;
+  --gold-light:   #E8C55A;
+  --gold-pale:    #FBF5E6;
+  --charcoal:     #1C1C1C;
+  --mid:          #555;
+  --silver:       #CCC;
+  --offwhite:     #FDFAF8;
+  --white:        #FFFFFF;
+  --ff-display:   'Playfair Display', Georgia, serif;
+  --ff-body:      'DM Sans', system-ui, sans-serif;
+  --radius:       6px;
+  --shadow:       0 2px 12px rgba(74,14,14,0.10);
+  --shadow-lg:    0 6px 32px rgba(74,14,14,0.14);
+  --transition:   0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--offwhite);
+  color: var(--charcoal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── DECORATIVE BACKGROUND ────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(107,20,20,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(201,162,39,0.05) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── LAYOUT ───────────────────────────────────── */
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── MASTHEAD ─────────────────────────────────── */
+.masthead {
+  padding: 48px 0 0;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.masthead-crest {
+  width: 48px;
+  height: 48px;
+  background: var(--maroon);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
+
+.masthead-crest svg { width: 28px; height: 28px; }
+
+.masthead-text {}
+.masthead-text .university {
+  font-family: var(--ff-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+.masthead-text .dept {
+  font-family: var(--ff-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* ── HERO HEADER ──────────────────────────────── */
+.hero {
+  padding: 36px 0 40px;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--gold);
+  margin-top: 28px;
+}
+
+.hero-label {
+  font-family: var(--ff-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--maroon-dark);
+  max-width: 600px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--maroon-mid);
+}
+
+.hero-sub {
+  margin-top: 18px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--mid);
+  max-width: 560px;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────── */
+.progress-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,250,248,0.92);
+  backdrop-filter: blur(8px);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(107,20,20,0.08);
+  margin: 0 -24px;
+  padding: 12px 24px;
+}
+
+.progress-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(107,20,20,0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--maroon) 0%, var(--gold) 100%);
+  border-radius: 99px;
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* ── FORM ─────────────────────────────────────── */
+form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── SECTION BREAK ────────────────────────────── */
+.section-break {
+  margin: 48px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-break .section-num {
+  width: 30px;
+  height: 30px;
+  background: var(--maroon);
+  color: var(--white);
+  font-family: var(--ff-display);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-break .section-title {
+  font-family: var(--ff-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+
+/* ── QUESTION CARD ────────────────────────────── */
+.q-card {
+  background: var(--white);
+  border: 1px solid rgba(107,20,20,0.09);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.q-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--silver);
+  transition: background var(--transition);
+}
+
+.q-card:focus-within {
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(107,20,20,0.22);
+  transform: translateY(-1px);
+}
+
+.q-card:focus-within::before { background: var(--maroon); }
+
+.q-card.answered::before { background: var(--gold); }
+
+/* Question number badge */
+.q-num {
+  display: inline-block;
+  font-family: var(--ff-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--maroon);
+  background: var(--maroon-light);
+  padding: 2px 9px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+
+.q-label {
+  font-family: var(--ff-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.q-hint {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--mid);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.q-required {
+  color: var(--maroon);
+  margin-left: 2px;
+}
+
+/* ── RADIO / CHECKBOX OPTIONS ─────────────────── */
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.options-grid.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.opt-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(107,20,20,0.11);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  user-select: none;
+  background: var(--offwhite);
+}
+
+.opt-item:hover {
+  border-color: var(--maroon);
+  background: var(--maroon-pale);
+}
+
+.opt-item input[type="radio"],
+.opt-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--silver);
+  border-radius: 50%;
+  background: var(--white);
+  flex-shrink: 0;
+  transition: all var(--transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.opt-item input[type="checkbox"] { border-radius: 4px; }
+
+.opt-item input[type="radio"]:checked,
+.opt-item input[type="checkbox"]:checked {
+  background: var(--maroon);
+  border-color: var(--maroon);
+}
+
+.opt-item input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--white);
+  border-radius: 50%;
+}
+
+.opt-item input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px; left: 4px;
+  width: 6px; height: 10px;
+  border: 2px solid var(--white);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.opt-item:has(input:checked) {
+  border-color: var(--maroon);
+  background: var(--maroon-light);
+}
+
+.opt-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--charcoal);
+  line-height: 1.4;
+}
+
+.opt-text small {
+  display: block;
+  font-size: 12px;
+  color: var(--mid);
+  font-weight: 300;
+  margin-top: 1px;
+}
+
+/* ── TEXT INPUTS ──────────────────────────────── */
+.text-input,
+.textarea-input,
+.select-input {
+  width: 100%;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--charcoal);
+  background: var(--offwhite);
+  border: 1.5px solid rgba(107,20,20,0.14);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  outline: none;
+  transition: all var(--transition);
+  appearance: none;
+}
+
+.text-input::placeholder,
+.textarea-input::placeholder { color: #AAA; font-weight: 300; }
+
+.text-input:focus,
+.textarea-input:focus,
+.select-input:focus {
+  border-color: var(--maroon);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(107,20,20,0.08);
+}
+
+.textarea-input {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.6;
+}
+
+/* ── CONDITIONAL REVEAL ───────────────────────── */
+.conditional-wrap {
+  display: none;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(107,20,20,0.14);
+}
+
+.conditional-wrap.visible { display: block; }
+
+.conditional-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--maroon);
+  margin-bottom: 8px;
+}
+
+/* ── SCALE / RATING ───────────────────────────── */
+.scale-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scale-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--mid);
+  padding: 0 2px;
+  margin-bottom: 4px;
+}
+
+.scale-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.scale-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid rgba(107,20,20,0.18);
+  border-radius: 50%;
+  background: var(--offwhite);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mid);
+  transition: all var(--transition);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.scale-dot:hover { border-color: var(--maroon); color: var(--maroon); background: var(--maroon-pale); }
+.scale-dot.selected { background: var(--maroon); border-color: var(--maroon); color: var(--white); }
+
+/* ── TAG CHIPS ─────────────────────────────────── */
+.tag-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border: 1.5px solid rgba(107,20,20,0.14);
+  border-radius: 99px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--charcoal);
+  background: var(--offwhite);
+  transition: all var(--transition);
+  user-select: none;
+}
+
+.tag-chip input { display: none; }
+.tag-chip:hover { border-color: var(--maroon); color: var(--maroon); background: var(--maroon-pale); }
+.tag-chip:has(input:checked) {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: var(--white);
+}
+
+/* ── CHARACTER COUNTER ─────────────────────────── */
+.char-counter {
+  text-align: right;
+  font-size: 11px;
+  color: var(--silver);
+  margin-top: 4px;
+  transition: color var(--transition);
+}
+
+.char-counter.warn { color: var(--gold); }
+.char-counter.over { color: var(--maroon); }
+
+/* ── INLINE TWO-COL ────────────────────────────── */
+.two-col-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-group { display: flex; flex-direction: column; gap: 5px; }
+.field-group label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--maroon);
+  letter-spacing: 0.04em;
+}
+
+/* ── SELECT ────────────────────────────────────── */
+.select-wrap { position: relative; }
+.select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--maroon);
+  font-size: 12px;
+}
+.select-input { padding-right: 34px; cursor: pointer; }
+
+/* ── SUBMIT SECTION ────────────────────────────── */
+.submit-wrap {
+  margin-top: 48px;
+  padding: 36px 30px;
+  background: var(--maroon-dark);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-wrap::before {
+  content: '';
+  position: absolute;
+  right: -30px; top: -30px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(201,162,39,0.08);
+  pointer-events: none;
+}
+
+.submit-wrap::after {
+  content: '';
+  position: absolute;
+  right: 30px; bottom: -50px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  pointer-events: none;
+}
+
+.submit-title {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.submit-note {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.55;
+  max-width: 480px;
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: var(--gold);
+  color: var(--maroon-dark);
+  font-family: var(--ff-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 18px rgba(201,162,39,0.32);
+  position: relative;
+  z-index: 1;
+}
+
+.btn-submit:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,162,39,0.42);
+}
+
+.btn-submit:active { transform: translateY(0); }
+
+.btn-submit svg { width: 16px; height: 16px; }
+
+/* ── SUCCESS STATE ─────────────────────────────── */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 80px 20px;
+  animation: fadeIn 0.5s ease both;
+}
+
+.success-screen.visible { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.success-icon {
+  width: 72px; height: 72px;
+  background: var(--maroon);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  box-shadow: 0 0 0 12px var(--maroon-light);
+}
+
+.success-icon svg { width: 34px; height: 34px; }
+
+.success-screen h2 {
+  font-family: var(--ff-display);
+  font-size: 30px;
+  color: var(--maroon-dark);
+  margin-bottom: 14px;
+}
+
+.success-screen p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.65;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ── FOOTER ────────────────────────────────────── */
+.form-footer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(107,20,20,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-text {
+  font-size: 11px;
+  color: #AAA;
+  font-weight: 300;
+}
+
+.footer-text a { color: var(--maroon); text-decoration: none; }
+
+/* ── VALIDATION ────────────────────────────────── */
+.error-msg {
+  font-size: 12px;
+  color: var(--maroon);
+  margin-top: 6px;
+  display: none;
+  font-weight: 500;
+}
+
+.q-card.has-error .error-msg { display: block; }
+.q-card.has-error { border-color: rgba(107,20,20,0.35); }
+.q-card.has-error::before { background: var(--maroon-mid); }
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 560px) {
+  .page-wrap { padding: 0 16px 60px; }
+  .q-card { padding: 20px 18px; }
+  .options-grid.two-col { grid-template-columns: 1fr; }
+  .two-col-fields { grid-template-columns: 1fr; }
+  .scale-dots { gap: 4px; }
+  .scale-dot { width: 32px; height: 32px; font-size: 12px; }
+  .submit-wrap { padding: 28px 20px; }
+}
+
+/* ── ANIMATIONS ────────────────────────────────── */
+.q-card {
+  animation: slideUp 0.35s ease both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.q-card:nth-child(2)  { animation-delay: 0.04s; }
+.q-card:nth-child(3)  { animation-delay: 0.08s; }
+.q-card:nth-child(4)  { animation-delay: 0.12s; }
+.q-card:nth-child(5)  { animation-delay: 0.16s; }
+.q-card:nth-child(6)  { animation-delay: 0.20s; }
+.q-card:nth-child(7)  { animation-delay: 0.24s; }
+.q-card:nth-child(8)  { animation-delay: 0.28s; }
+.q-card:nth-child(9)  { animation-delay: 0.32s; }
+.q-card:nth-child(10) { animation-delay: 0.36s; }
+.q-card:nth-child(11) { animation-delay: 0.40s; }
+
+/* ── MENTOR INTRO BANNER ───────────────────────── */
+.mentor-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,162,39,0.25);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 400;
+  color: #6B5000;
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+.mentor-intro svg {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--gold);
+  stroke: var(--gold);
+}
+
+/* ── MENTOR PERSON CARD ────────────────────────── */
+.mentor-person-card {
+  background: var(--maroon-pale);
+  border: 1.5px solid rgba(107,20,20,0.12);
+  border-radius: var(--radius);
+  padding: 18px 18px 14px;
+  margin-bottom: 12px;
+  position: relative;
+  animation: slideUp 0.25s ease both;
+}
+
+.mentor-person-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.mentor-person-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+
+.btn-remove-mentor {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid rgba(107,20,20,0.18);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--maroon);
+  cursor: pointer;
+  font-family: var(--ff-body);
+  transition: all var(--transition);
+}
+.btn-remove-mentor:hover {
+  background: var(--maroon-light);
+  border-color: var(--maroon);
+}
+.btn-remove-mentor svg { width: 11px; height: 11px; stroke: currentColor; }
+
+.mentor-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mentor-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mentor-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.mentor-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mentor-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mentor-field-optional {
+  font-weight: 400;
+  color: var(--mid);
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.contact-pref-note {
+  font-size: 11px;
+  color: var(--mid);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── ADD MENTOR BUTTON ─────────────────────────── */
+.btn-add-mentor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1.5px dashed rgba(107,20,20,0.28);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--maroon);
+  cursor: pointer;
+  font-family: var(--ff-body);
+  width: 100%;
+  justify-content: center;
+  transition: all var(--transition);
+  margin-top: 4px;
+}
+.btn-add-mentor:hover {
+  background: var(--maroon-light);
+  border-color: var(--maroon);
+  border-style: solid;
+}
+.btn-add-mentor svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+@media (max-width: 560px) {
+  .mentor-row-2,
+  .mentor-row-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="masthead-crest">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 2L4 7V14C4 19.5 8.5 24.5 14 26C19.5 24.5 24 19.5 24 14V7L14 2Z" stroke="#C9A227" stroke-width="1.5" fill="none"/>
+        <path d="M10 14h8M14 10v8" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="14" r="2" fill="#C9A227"/>
+      </svg>
+    </div>
+    <div class="masthead-text">
+      <div class="university">Loyola University New Orleans</div>
+      <div class="dept">Department of Design</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Program Insights Survey</div>
+    <h1>Help us understand<br><em>who you are</em><br>and what brought you here.</h1>
+    <p class="hero-sub">
+      This brief survey helps the Design Program understand our students better — how you found us, what motivated you, and how we can serve you and future students more effectively. It takes about 5 minutes.
+    </p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-inner">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0 of 11</div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <form id="surveyForm" novalidate>
+
+    <!-- ─── SECTION A: Program ─────────────────── -->
+    <div class="section-break">
+      <div class="section-num">A</div>
+      <div class="section-title">Your Program</div>
+    </div>
+
+    <!-- Q1: Concentration -->
+    <div class="q-card" id="q1">
+      <div class="q-num">Q 01</div>
+      <div class="q-label">What is your concentration within the Design Program? <span class="q-required">*</span></div>
+      <div class="q-hint">Select the option that best describes your current or intended focus.</div>
+      <div class="options-grid">
+        <label class="opt-item">
+          <input type="radio" name="concentration" value="graphic_design" />
+          <span class="opt-text">Graphic Design<small>Visual communication, branding, print & digital media</small></span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="concentration" value="interactive_design" />
+          <span class="opt-text">Interactive (UI/UX) Design<small>User experience, interface design, web & app design</small></span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="concentration" value="both" />
+          <span class="opt-text">Pursuing Both Concentrations<small>Double concentration or undecided between the two</small></span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="concentration" value="undecided" />
+          <span class="opt-text">Undecided<small>Still exploring which direction fits me best</small></span>
+        </label>
+      </div>
+      <div class="error-msg">Please select your concentration.</div>
+    </div>
+
+    <!-- Q2: Student type -->
+    <div class="q-card" id="q2">
+      <div class="q-num">Q 02</div>
+      <div class="q-label">How did you enter the Design Program? <span class="q-required">*</span></div>
+      <div class="options-grid two-col">
+        <label class="opt-item">
+          <input type="radio" name="entry_type" value="new_freshman" />
+          <span class="opt-text">New Freshman</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="entry_type" value="transfer_internal" />
+          <span class="opt-text">Transfer — from another Loyola major</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="entry_type" value="transfer_external" />
+          <span class="opt-text">Transfer — from another university</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="entry_type" value="other_entry" />
+          <span class="opt-text">Other</span>
+        </label>
+      </div>
+
+      <div class="conditional-wrap" id="entryTransferDetail">
+        <div class="conditional-label">If you transferred, what was your previous major or institution?</div>
+        <input type="text" class="text-input" name="prev_major_school" placeholder="e.g. Computer Science at Loyola, or LSU Fine Arts" />
+      </div>
+      <div class="error-msg">Please select how you entered the program.</div>
+    </div>
+
+    <!-- ─── SECTION B: Motivation ─────────────── -->
+    <div class="section-break">
+      <div class="section-num">B</div>
+      <div class="section-title">What Brought You Here</div>
+    </div>
+
+    <!-- Q3: Primary reason for applying -->
+    <div class="q-card" id="q3">
+      <div class="q-num">Q 03</div>
+      <div class="q-label">What was your primary reason for applying to the Design Program? <span class="q-required">*</span></div>
+      <div class="q-hint">Select the single most important factor in your decision.</div>
+      <div class="options-grid">
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="career_goals" />
+          <span class="opt-text">Career goals — I want to work as a designer</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="passion_creativity" />
+          <span class="opt-text">Passion for creativity, art, or visual problem-solving</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="tech_design_bridge" />
+          <span class="opt-text">Bridge between technology and design (coding + visual work)</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="game_design" />
+          <span class="opt-text">Interest in game design or game UI/UX</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="storytelling" />
+          <span class="opt-text">Visual storytelling — translating words or ideas into images</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="community_impact" />
+          <span class="opt-text">Using design for community impact or social change</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="recommendation" />
+          <span class="opt-text">Recommended by a teacher, mentor, or counselor</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="campus_visit" />
+          <span class="opt-text">A Loyola campus visit or recruitment event</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="primary_reason" value="other_reason" />
+          <span class="opt-text">Other</span>
+        </label>
+      </div>
+
+      <div class="conditional-wrap" id="otherReasonDetail">
+        <div class="conditional-label">Please describe your reason:</div>
+        <textarea class="textarea-input" name="other_reason_text" placeholder="Tell us more about what brought you to the Design Program…" maxlength="400"></textarea>
+        <div class="char-counter" id="otherReasonCounter">0 / 400</div>
+      </div>
+      <div class="error-msg">Please select your primary reason.</div>
+    </div>
+
+    <!-- Q4: How did you first hear about Loyola Design -->
+    <div class="q-card" id="q4">
+      <div class="q-num">Q 04</div>
+      <div class="q-label">How did you first hear about the Loyola Design Program? <span class="q-required">*</span></div>
+      <div class="q-hint">Select all that apply.</div>
+      <div class="tag-wrap">
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="campus_visit_tour" />Campus visit / department tour</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="high_school_teacher" />High school teacher or counselor</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="friend_family" />Friend or family member</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="social_media_ig" />Instagram</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="social_media_tiktok" />TikTok</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="social_media_youtube" />YouTube</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="loyola_website" />Loyola website</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="college_fair" />College fair or arts festival</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="google_search" />Google / web search</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="current_student" />Current Loyola Design student</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="loyola_alumni" />Loyola alumni</label>
+        <label class="tag-chip"><input type="checkbox" name="discovery" value="other_discovery" />Other</label>
+      </div>
+      <div class="error-msg">Please select at least one option.</div>
+    </div>
+
+    <!-- Q5: Factors that influenced final decision -->
+    <div class="q-card" id="q5">
+      <div class="q-num">Q 05</div>
+      <div class="q-label">How important were each of the following factors in your final decision to enroll?</div>
+      <div class="q-hint">Rate each from 1 (Not important) to 5 (Very important).</div>
+
+      <div class="scale-wrap" id="importanceScale">
+        <!-- generated by JS -->
+      </div>
+    </div>
+
+    <!-- ─── SECTION C: Background ─────────────── -->
+    <div class="section-break">
+      <div class="section-num">C</div>
+      <div class="section-title">Your Background</div>
+    </div>
+
+    <!-- Q6: High school -->
+    <div class="q-card" id="q6">
+      <div class="q-num">Q 06</div>
+      <div class="q-label">What high school did you attend? <span class="q-required">*</span></div>
+      <div class="two-col-fields">
+        <div class="field-group">
+          <label for="hs_name">School Name</label>
+          <input type="text" class="text-input" id="hs_name" name="hs_name" placeholder="e.g. Warren Easton Charter High School" />
+        </div>
+        <div class="field-group">
+          <label for="hs_city">City &amp; State</label>
+          <input type="text" class="text-input" id="hs_city" name="hs_city" placeholder="e.g. New Orleans, LA" />
+        </div>
+      </div>
+      <div class="error-msg">Please enter your high school name.</div>
+    </div>
+
+    <!-- Q7: Design/Art/Tech in high school -->
+    <div class="q-card" id="q7">
+      <div class="q-num">Q 07</div>
+      <div class="q-label">Did you study design, art, or computer technology in high school? <span class="q-required">*</span></div>
+      <div class="options-grid two-col">
+        <label class="opt-item">
+          <input type="radio" name="hs_study" value="yes" />
+          <span class="opt-text">Yes — formally, as a class or program</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="hs_study" value="self_taught" />
+          <span class="opt-text">Mostly self-taught outside of school</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="hs_study" value="both_hs_self" />
+          <span class="opt-text">Both — classes and self-taught</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="hs_study" value="no" />
+          <span class="opt-text">No prior formal or informal study</span>
+        </label>
+      </div>
+
+      <div class="conditional-wrap" id="hsStudyDetail">
+        <div class="conditional-label">Please specify the subject(s) or course(s):</div>
+        <div class="tag-wrap" style="margin-bottom:10px;">
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="visual_art" />Visual Art / Studio Art</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="graphic_design_hs" />Graphic Design</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="digital_art" />Digital Art</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="photography" />Photography</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="computer_science_hs" />Computer Science / AP CS</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="web_design_hs" />Web Design / HTML/CSS</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="video_film" />Video / Film / Animation</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="yearbook" />Yearbook / Publication Design</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="theater_stagecraft" />Theater / Stagecraft Design</label>
+          <label class="tag-chip"><input type="checkbox" name="hs_subjects" value="other_hs" />Other</label>
+        </div>
+        <input type="text" class="text-input" name="hs_other_detail" placeholder="Any other courses, programs, or activities you'd like to mention…" />
+      </div>
+      <div class="error-msg">Please select an option.</div>
+    </div>
+
+    <!-- Q8: Mentor / teacher -->
+    <div class="q-card" id="q8">
+      <div class="q-num">Q 08</div>
+      <div class="q-label">Did a mentor or teacher influence your decision to pursue design?</div>
+      <div class="q-hint">This could be a high school art teacher, CS teacher, design mentor, or anyone who guided or inspired you. We may reach out to them to say thank you and to explore future partnerships with the Design Program.</div>
+      <div class="options-grid two-col">
+        <label class="opt-item">
+          <input type="radio" name="had_mentor" value="yes_teacher" />
+          <span class="opt-text">Yes &mdash; a high school teacher</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="had_mentor" value="yes_mentor" />
+          <span class="opt-text">Yes &mdash; an outside mentor or professional</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="had_mentor" value="yes_both" />
+          <span class="opt-text">Yes &mdash; both a teacher and a mentor</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="had_mentor" value="no_mentor" />
+          <span class="opt-text">No influential mentor or teacher</span>
+        </label>
+      </div>
+
+      <div class="conditional-wrap" id="mentorDetail">
+        <div class="mentor-intro">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="5" r="3"/><path d="M3 16c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+          Please share their contact details so we can reach out, thank them, and explore future collaboration with the Design Program.
+        </div>
+        <div id="mentorCardsWrap"></div>
+        <button type="button" class="btn-add-mentor" id="btnAddMentor">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+          Add another person
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── SECTION D: Digital Life ──────────── -->
+    <div class="section-break">
+      <div class="section-num">D</div>
+      <div class="section-title">Digital Interests &amp; Tools</div>
+    </div>
+
+    <!-- Q9: Creative tools before enrolling -->
+    <div class="q-card" id="q9">
+      <div class="q-num">Q 09</div>
+      <div class="q-label">Which digital tools or platforms were you using before enrolling in the program?</div>
+      <div class="q-hint">Select all that apply.</div>
+      <div class="tag-wrap">
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="procreate" />Procreate</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="canva" />Canva</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="illustrator" />Adobe Illustrator</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="photoshop" />Adobe Photoshop</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="indesign" />Adobe InDesign</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="figma" />Figma</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="premiere" />Adobe Premiere / Final Cut</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="after_effects" />After Effects</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="coding_html" />HTML / CSS / JavaScript</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="coding_python" />Python / Java / other code</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="roblox_game" />Roblox Studio / game modding</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="blender_3d" />Blender / 3D tools</label>
+        <label class="tag-chip"><input type="checkbox" name="tools_before" value="none_tools" />None — I'm starting fresh</label>
+      </div>
+    </div>
+
+    <!-- Q10: Interest in game design -->
+    <div class="q-card" id="q10">
+      <div class="q-num">Q 10</div>
+      <div class="q-label">Are you interested in game design or game UI/UX as a career direction?</div>
+      <div class="options-grid two-col">
+        <label class="opt-item">
+          <input type="radio" name="game_interest" value="yes_primary" />
+          <span class="opt-text">Yes — it's my primary interest</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="game_interest" value="yes_secondary" />
+          <span class="opt-text">Yes — one of several interests</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="game_interest" value="maybe" />
+          <span class="opt-text">Maybe — I want to learn more</span>
+        </label>
+        <label class="opt-item">
+          <input type="radio" name="game_interest" value="no_game" />
+          <span class="opt-text">No — not a focus for me</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ─── SECTION E: Contact ─────────────────── -->
+    <div class="section-break">
+      <div class="section-num">E</div>
+      <div class="section-title">Stay in Touch</div>
+    </div>
+
+    <!-- Q11: Contact info -->
+    <div class="q-card" id="q11">
+      <div class="q-num">Q 11</div>
+      <div class="q-label">What is your email address? <span class="q-required">*</span></div>
+      <div class="q-hint">We may follow up with a brief thank-you or to share updates relevant to your interests. Your information will not be shared outside the Design Program.</div>
+      <div class="two-col-fields">
+        <div class="field-group">
+          <label for="first_name">First Name</label>
+          <input type="text" class="text-input" id="first_name" name="first_name" placeholder="First name" autocomplete="given-name" />
+        </div>
+        <div class="field-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" class="text-input" id="last_name" name="last_name" placeholder="Last name" autocomplete="family-name" />
+        </div>
+      </div>
+      <div style="margin-top:10px;">
+        <input type="email" class="text-input" id="email" name="email" placeholder="your.email@example.com" autocomplete="email" />
+      </div>
+      <div style="margin-top:10px;" class="select-wrap">
+        <select class="select-input" name="contact_ok">
+          <option value="" disabled selected>May we contact you for a brief follow-up interview?</option>
+          <option value="yes_followup">Yes — I'm open to a short follow-up conversation</option>
+          <option value="survey_only">No — survey responses only, please</option>
+        </select>
+      </div>
+      <div class="error-msg">Please enter a valid email address.</div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <div class="submit-title">Thank you for sharing<br>your story with us.</div>
+      <div class="submit-note">
+        Your responses directly shape how we recruit, advise, and support students in the Design Program. Every answer helps us build a better program for the students who come after you.
+      </div>
+      <p id="submitError" style="display:none; margin-top:14px; color:#B00020; font-size:13px; text-align:center;">Something went wrong — please check your connection and try again.</p>
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Submit Survey
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg viewBox="0 0 34 34" fill="none" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 17l8 8 14-14"/>
+      </svg>
+    </div>
+    <h2>Response Submitted</h2>
+    <p>Thank you for taking the time to complete this survey. Your insights help us build a stronger, more connected Design Program at Loyola.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="form-footer">
+    <span class="footer-text">© 2025–2026 Loyola University New Orleans — Department of Design</span>
+    <span class="footer-text">Responses are confidential and used for internal program development only.</span>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+// ── IMPORTANCE SCALE: inject rows ──────────────────
+const scaleFactors = [
+  { key: "f_nola_culture",    label: "New Orleans city & cultural environment" },
+  { key: "f_small_class",     label: "Small class sizes & direct faculty access" },
+  { key: "f_program_focus",   label: "Specific curriculum (Graphic or Interactive Design)" },
+  { key: "f_scholarship",     label: "Financial aid or scholarship availability" },
+  { key: "f_career_outcomes", label: "Career placement & alumni outcomes" },
+  { key: "f_jesuit_mission",  label: "Loyola's Jesuit mission & values" },
+  { key: "f_location_pref",   label: "Physical location / proximity to home" },
+];
+
+const scaleWrap = document.getElementById('importanceScale');
+
+scaleFactors.forEach(factor => {
+  const row = document.createElement('div');
+  row.style.cssText = 'margin-bottom:14px;';
+  row.innerHTML = `
+    <div style="font-size:13px;font-weight:500;color:var(--charcoal);margin-bottom:6px;">${factor.label}</div>
+    <div style="display:flex;align-items:center;gap:0;">
+      <span style="font-size:11px;color:var(--mid);width:90px;flex-shrink:0;">Not important</span>
+      <div class="scale-dots" data-factor="${factor.key}">
+        ${[1,2,3,4,5].map(n => `<div class="scale-dot" data-val="${n}" tabindex="0" role="radio" aria-label="${n}">${n}</div>`).join('')}
+      </div>
+      <span style="font-size:11px;color:var(--mid);margin-left:8px;flex-shrink:0;">Very important</span>
+    </div>`;
+  scaleWrap.appendChild(row);
+});
+
+// Scale dot interaction
+document.querySelectorAll('.scale-dots').forEach(group => {
+  group.addEventListener('click', e => {
+    const dot = e.target.closest('.scale-dot');
+    if (!dot) return;
+    group.querySelectorAll('.scale-dot').forEach(d => {
+      d.classList.remove('selected');
+      d.setAttribute('aria-checked','false');
+    });
+    dot.classList.add('selected');
+    dot.setAttribute('aria-checked','true');
+    updateProgress();
+  });
+  group.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+});
+
+// ── CONDITIONAL LOGIC ─────────────────────────────
+function toggleConditional(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('visible', show);
+}
+
+document.querySelectorAll('[name="entry_type"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const val = r.value;
+    toggleConditional('entryTransferDetail', val === 'transfer_internal' || val === 'transfer_external');
+  });
+});
+
+document.querySelectorAll('[name="primary_reason"]').forEach(r => {
+  r.addEventListener('change', () => {
+    toggleConditional('otherReasonDetail', r.value === 'other_reason');
+  });
+});
+
+document.querySelectorAll('[name="hs_study"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const val = r.value;
+    toggleConditional('hsStudyDetail', val === 'yes' || val === 'self_taught' || val === 'both_hs_self');
+  });
+});
+
+// ── MENTOR CARD SYSTEM ────────────────────────────
+let mentorCount = 0;
+
+function createMentorCard(index) {
+  const n = index + 1;
+  const card = document.createElement('div');
+  card.className = 'mentor-person-card';
+  card.dataset.index = index;
+
+  card.innerHTML = `
+    <div class="mentor-person-header">
+      <span class="mentor-person-label">Person ${n}</span>
+      ${index > 0 ? `<button type="button" class="btn-remove-mentor" onclick="removeMentorCard(this)">
+        <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+        Remove
+      </button>` : ''}
+    </div>
+    <div class="mentor-fields">
+
+      <!-- Row 1: Full name + Role/Title -->
+      <div class="mentor-row-2">
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">Full Name <span class="q-required">*</span></label>
+          <input type="text" class="text-input" name="mentor_${index}_name"
+            placeholder="e.g. Ms. Tanya Williams" autocomplete="off" />
+        </div>
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">Role / Title</label>
+          <input type="text" class="text-input" name="mentor_${index}_role"
+            placeholder="e.g. AP Art Teacher, Design Mentor" />
+        </div>
+      </div>
+
+      <!-- Row 2: Subject area + School / Organization -->
+      <div class="mentor-row-2">
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">Subject Area</label>
+          <input type="text" class="text-input" name="mentor_${index}_subject"
+            placeholder="e.g. Graphic Design, Computer Science" />
+        </div>
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">School / Organization</label>
+          <input type="text" class="text-input" name="mentor_${index}_school"
+            placeholder="e.g. Warren Easton Charter High School" />
+        </div>
+      </div>
+
+      <!-- Row 3: Email + Phone -->
+      <div class="mentor-row-2">
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">Email Address
+            <span class="mentor-field-optional">(optional)</span>
+          </label>
+          <input type="email" class="text-input" name="mentor_${index}_email"
+            placeholder="teacher@school.edu" autocomplete="off" />
+        </div>
+        <div class="mentor-field-group">
+          <label class="mentor-field-label">Phone Number
+            <span class="mentor-field-optional">(optional)</span>
+          </label>
+          <input type="tel" class="text-input" name="mentor_${index}_phone"
+            placeholder="(504) 000-0000" autocomplete="off" />
+        </div>
+      </div>
+
+    </div>
+  `;
+  return card;
+}
+
+function addMentorCard() {
+  const wrap = document.getElementById('mentorCardsWrap');
+  const card = createMentorCard(mentorCount);
+  wrap.appendChild(card);
+  mentorCount++;
+  // Re-label all cards
+  relabelMentorCards();
+  // Focus first input of new card
+  const firstInput = card.querySelector('input');
+  if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+
+function removeMentorCard(btn) {
+  const card = btn.closest('.mentor-person-card');
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(-6px)';
+  card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+  setTimeout(() => {
+    card.remove();
+    relabelMentorCards();
+    updateProgress();
+  }, 200);
+}
+
+function relabelMentorCards() {
+  const cards = document.querySelectorAll('#mentorCardsWrap .mentor-person-card');
+  cards.forEach((card, i) => {
+    const label = card.querySelector('.mentor-person-label');
+    if (label) label.textContent = cards.length > 1 ? `Person ${i + 1}` : 'Contact Details';
+  });
+}
+
+// Init first card when conditional reveals
+function initMentorSection() {
+  const wrap = document.getElementById('mentorCardsWrap');
+  if (wrap.children.length === 0) {
+    mentorCount = 0;
+    addMentorCard();
+  }
+}
+
+document.getElementById('btnAddMentor').addEventListener('click', addMentorCard);
+
+document.querySelectorAll('[name="had_mentor"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const val = r.value;
+    const show = (val === 'yes_teacher' || val === 'yes_mentor' || val === 'yes_both');
+    toggleConditional('mentorDetail', show);
+    if (show) initMentorSection();
+  });
+});
+
+// ── CHARACTER COUNTER ─────────────────────────────
+const otherReasonTA = document.querySelector('[name="other_reason_text"]');
+const otherCounter  = document.getElementById('otherReasonCounter');
+if (otherReasonTA) {
+  otherReasonTA.addEventListener('input', () => {
+    const len = otherReasonTA.value.length;
+    otherCounter.textContent = `${len} / 400`;
+    otherCounter.className = 'char-counter' + (len > 380 ? ' over' : len > 320 ? ' warn' : '');
+  });
+}
+
+// ── PROGRESS BAR ──────────────────────────────────
+const TOTAL_Q = 11;
+function countAnswered() {
+  let answered = 0;
+  // Q1
+  if (document.querySelector('[name="concentration"]:checked')) answered++;
+  // Q2
+  if (document.querySelector('[name="entry_type"]:checked')) answered++;
+  // Q3
+  if (document.querySelector('[name="primary_reason"]:checked')) answered++;
+  // Q4
+  if (document.querySelectorAll('[name="discovery"]:checked').length > 0) answered++;
+  // Q5 — at least one scale dot selected
+  if (document.querySelectorAll('.scale-dot.selected').length > 0) answered++;
+  // Q6
+  if (document.getElementById('hs_name').value.trim()) answered++;
+  // Q7
+  if (document.querySelector('[name="hs_study"]:checked')) answered++;
+  // Q8
+  if (document.querySelector('[name="had_mentor"]:checked')) answered++;
+  // Q9
+  if (document.querySelectorAll('[name="tools_before"]:checked').length > 0) answered++;
+  // Q10
+  if (document.querySelector('[name="game_interest"]:checked')) answered++;
+  // Q11
+  if (document.getElementById('email').value.trim()) answered++;
+  return answered;
+}
+
+function updateProgress() {
+  const n = countAnswered();
+  document.getElementById('progressFill').style.width = `${(n / TOTAL_Q) * 100}%`;
+  document.getElementById('progressLabel').textContent = `${n} of ${TOTAL_Q}`;
+}
+
+// Mark answered cards
+function markAnswered() {
+  document.querySelectorAll('.q-card').forEach(card => {
+    const id = card.id;
+    const n  = parseInt(id.replace('q', ''));
+    let answered = false;
+    if (n === 1  && document.querySelector('[name="concentration"]:checked')) answered = true;
+    if (n === 2  && document.querySelector('[name="entry_type"]:checked'))    answered = true;
+    if (n === 3  && document.querySelector('[name="primary_reason"]:checked'))answered = true;
+    if (n === 4  && document.querySelectorAll('[name="discovery"]:checked').length > 0) answered = true;
+    if (n === 5  && document.querySelectorAll('.scale-dot.selected').length > 0) answered = true;
+    if (n === 6  && document.getElementById('hs_name').value.trim()) answered = true;
+    if (n === 7  && document.querySelector('[name="hs_study"]:checked'))      answered = true;
+    if (n === 8  && document.querySelector('[name="had_mentor"]:checked'))    answered = true;
+    if (n === 9  && document.querySelectorAll('[name="tools_before"]:checked').length > 0) answered = true;
+    if (n === 10 && document.querySelector('[name="game_interest"]:checked')) answered = true;
+    if (n === 11 && document.getElementById('email').value.trim()) answered = true;
+    card.classList.toggle('answered', answered);
+  });
+}
+
+document.getElementById('surveyForm').addEventListener('change', () => { updateProgress(); markAnswered(); });
+document.getElementById('surveyForm').addEventListener('input',  () => { updateProgress(); markAnswered(); });
+
+// ── VALIDATION & SUBMIT ───────────────────────────
+function clearErrors() {
+  document.querySelectorAll('.q-card.has-error').forEach(c => c.classList.remove('has-error'));
+}
+
+function validateForm() {
+  clearErrors();
+  let valid = true;
+
+  const required = [
+    { id: 'q1',  check: () => !!document.querySelector('[name="concentration"]:checked') },
+    { id: 'q2',  check: () => !!document.querySelector('[name="entry_type"]:checked') },
+    { id: 'q3',  check: () => !!document.querySelector('[name="primary_reason"]:checked') },
+    { id: 'q4',  check: () => document.querySelectorAll('[name="discovery"]:checked').length > 0 },
+    { id: 'q6',  check: () => !!document.getElementById('hs_name').value.trim() },
+    { id: 'q7',  check: () => !!document.querySelector('[name="hs_study"]:checked') },
+    { id: 'q11', check: () => {
+        const email = document.getElementById('email').value.trim();
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+    },
+  ];
+
+  required.forEach(rule => {
+    if (!rule.check()) {
+      document.getElementById(rule.id).classList.add('has-error');
+      valid = false;
+    }
+  });
+
+  return valid;
+}
+
+document.getElementById('surveyForm').addEventListener('submit', e => {
+  e.preventDefault();
+
+  if (!validateForm()) {
+    const firstError = document.querySelector('.q-card.has-error');
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Collect all responses
+  const data = new FormData(e.target);
+  const responses = {};
+  for (const [k, v] of data.entries()) {
+    if (responses[k]) {
+      responses[k] = Array.isArray(responses[k]) ? [...responses[k], v] : [responses[k], v];
+    } else {
+      responses[k] = v;
+    }
+  }
+  // Scale values
+  document.querySelectorAll('.scale-dots').forEach(group => {
+    const sel = group.querySelector('.scale-dot.selected');
+    if (sel) responses['scale_' + group.dataset.factor] = sel.dataset.val;
+  });
+
+  // Flatten arrays to comma-separated strings for Sheets readability
+  for (const k in responses) {
+    if (Array.isArray(responses[k])) responses[k] = responses[k].join(', ');
+  }
+  responses['submitted_at'] = new Date().toISOString();
+
+  // ── LOADING STATE ─────────────────────────────────
+  const submitBtn = document.getElementById('submitBtn');
+  const originalBtnHTML = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span style="opacity:0.7">Submitting…</span>';
+
+  // ── SEND TO GOOGLE SHEETS ─────────────────────────
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVWUcl8107AFJV47ewK9PcGngOUCdC5aojYAt0F6lKO57maNVMW7MVAr5U9R1m0VdU/exec';
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(responses),
+    });
+    // no-cors means we can't read response — but if no exception, treat as success
+    showSuccess();
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnHTML;
+    const errMsg = document.getElementById('submitError');
+    if (errMsg) { errMsg.style.display = 'block'; setTimeout(() => errMsg.style.display = 'none', 6000); }
+    console.error('Submission error:', err);
+  }
+});
+
+function showSuccess() {
+  document.getElementById('surveyForm').style.display = 'none';
+  document.querySelector('.hero').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'none';
+  document.querySelectorAll('.section-break').forEach(el => el.style.display = 'none');
+  document.getElementById('successScreen').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
+updateProgress();
+</script>
+</body>
+</html>
